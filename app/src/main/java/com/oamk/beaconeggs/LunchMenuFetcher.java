@@ -1,5 +1,7 @@
 package com.oamk.beaconeggs;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -7,9 +9,11 @@ import java.util.ArrayList;
  */
 
 public class LunchMenuFetcher {
-    public ArrayList<LunchMenuItem> fetchLunchMenu(String link){
-        ArrayList<LunchMenuItem> mockuplist = new ArrayList<>();
-        mockuplist.add(new LunchMenuItem("VEGETABLE LUNCH", "Cauliflower and manchego patties", "Yoghurt and honey sauce"));
-        return mockuplist;
+    private final static String TAG = "LunchMenuFetcher";
+
+    public void fetchLunchMenu(ArrayList lunchMenuItems){
+        Log.d(TAG, "fetchLunchMenu");
+
+        lunchMenuItems.add(new LunchMenuItem("VEGETABLE LUNCH", "Cauliflower and manchego patties", "Kakkaaaaa and honey sauce"));
     }
 }

@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
 
         lunchMenuListView = (ListView) findViewById(R.id.menuListView);
         lunchMenuItemAdapter = new LunchMenuItemAdapter(this, R.layout.menu_item, lunchMenuItems);
+        lunchMenuListView.setAdapter(lunchMenuItemAdapter);
 
 
         proximityContentManager = new ProximityContentManager(this,
@@ -59,8 +60,8 @@ public class MainActivity extends AppCompatActivity {
                 if (content != null) {
                     EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
                     text = beaconDetails.getBeaconName();
-                    lunchMenuItems = lunchMenuFetcher.fetchLunchMenu("http://www.amica.fi/api/restaurant/menu/day?date="+ fDate + "&language=en&restaurantPageId=66287");
-                    lunchMenuListView.setAdapter(lunchMenuItemAdapter);
+
+                    lunchMenuFetcher.fetchLunchMenu(lunchMenuItems);
 
                     lunchMenuItemAdapter.notifyDataSetChanged();
                 } else {
