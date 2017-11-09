@@ -1,8 +1,11 @@
 package com.oamk.beaconeggs;
 
+import android.content.Context;
+import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private String fDate;
+    private Context mContext;
 
     private ProximityContentManager proximityContentManager;
 
@@ -38,7 +42,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
 
+        mContext = this;
         Date cDate = new Date();
         fDate = new SimpleDateFormat("yyyy-MM-dd").format(cDate);
 
@@ -61,11 +68,13 @@ public class MainActivity extends AppCompatActivity {
                     EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
                     text = beaconDetails.getBeaconName();
 
-                    lunchMenuFetcher.fetchLunchMenu(lunchMenuItems);
+                    lunchMenuFetcher.fetchLunchMenu(lunchMenuItems, lunchMenuItemAdapter, mContext, fDate);
 
                     lunchMenuItemAdapter.notifyDataSetChanged();
                 } else {
-                    text = "No beacons in range.";
+                    text = "Searching for nearby restaurants!";
+                    lunchMenuItems.clear();
+                    lunchMenuItemAdapter.notifyDataSetChanged();
                 }
                 ((TextView) findViewById(R.id.restaurantTitle)).setText(text);
             }
