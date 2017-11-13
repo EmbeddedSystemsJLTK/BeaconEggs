@@ -5,7 +5,9 @@ import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -36,6 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private LunchMenuItemAdapter lunchMenuItemAdapter;
 
     private ListView lunchMenuListView;
+    private LinearLayout searchLayout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,8 @@ public class MainActivity extends AppCompatActivity {
         lunchMenuListView = (ListView) findViewById(R.id.menuListView);
         lunchMenuItemAdapter = new LunchMenuItemAdapter(this, R.layout.menu_item, lunchMenuItems);
         lunchMenuListView.setAdapter(lunchMenuItemAdapter);
+
+        searchLayout = (LinearLayout) findViewById(R.id.searchLayout);
 
 
         proximityContentManager = new ProximityContentManager(this,
@@ -70,10 +75,15 @@ public class MainActivity extends AppCompatActivity {
 
                     lunchMenuFetcher.fetchLunchMenu(lunchMenuItems, lunchMenuItemAdapter, mContext, fDate);
 
+                    searchLayout.setVisibility(View.INVISIBLE);
+
                     lunchMenuItemAdapter.notifyDataSetChanged();
                 } else {
-                    text = "Searching for nearby restaurants!";
+                    text = "";
                     lunchMenuItems.clear();
+
+                    searchLayout.setVisibility(View.VISIBLE);
+
                     lunchMenuItemAdapter.notifyDataSetChanged();
                 }
                 ((TextView) findViewById(R.id.restaurantTitle)).setText(text);
