@@ -12,6 +12,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.estimote.coresdk.common.requirements.SystemRequirementsChecker;
+import com.oamk.beaconeggs.estimote.BeaconNotificationManager;
 import com.oamk.beaconeggs.estimote.EstimoteCloudBeaconDetails;
 import com.oamk.beaconeggs.estimote.EstimoteCloudBeaconDetailsFactory;
 import com.oamk.beaconeggs.estimote.ProximityContentManager;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Context mContext;
 
     private ProximityContentManager proximityContentManager;
+    private BeaconNotificationManager beaconNotificationManager;
 
     private LunchMenuFetcher lunchMenuFetcher = new LunchMenuFetcher();
     private ArrayList<LunchMenuItem> lunchMenuItems = new ArrayList<>();
@@ -58,6 +60,12 @@ public class MainActivity extends AppCompatActivity {
 
         searchLayout = (LinearLayout) findViewById(R.id.searchLayout);
 
+        beaconNotificationManager = new BeaconNotificationManager(this);
+        beaconNotificationManager.addNotification(
+            "359bdb94a0f2f3d0fdba03eff8002108",
+            "There is a restaurant nearby!",
+            "Please come back"
+        );
 
         proximityContentManager = new ProximityContentManager(this,
                 Arrays.asList(
@@ -102,6 +110,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
             Log.d(TAG, "Starting ProximityContentManager content updates");
             proximityContentManager.startContentUpdates();
+
         }
     }
 
@@ -110,6 +119,7 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         Log.d(TAG, "Stopping ProximityContentManager content updates");
         proximityContentManager.stopContentUpdates();
+        beaconNotificationManager.startMonitoring();
     }
 
     @Override
