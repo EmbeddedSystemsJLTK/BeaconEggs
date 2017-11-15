@@ -83,6 +83,10 @@ public class BeaconNotificationManager {
         });
     }
 
+    public void stopMonitoring() {
+        beaconManager.disconnect();
+    }
+
     private void showNotification(String message) {
         Intent resultIntent = new Intent(context, MainActivity.class);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(
@@ -90,7 +94,7 @@ public class BeaconNotificationManager {
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context)
                 .setSmallIcon(android.R.drawable.ic_dialog_info)
-                .setContentTitle("Hey! Listen!")
+                .setContentTitle("Restaurant found")
                 .setContentText(message)
                 .setDefaults(NotificationCompat.DEFAULT_ALL)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)

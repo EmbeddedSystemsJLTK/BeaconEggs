@@ -131,6 +131,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        beaconNotificationManager.stopMonitoring();
 
         if (!SystemRequirementsChecker.checkWithDefaultDialogs(this)) {
             Log.e(TAG, "Can't scan for beacons, some pre-conditions were not met");
@@ -157,6 +158,11 @@ public class MainActivity extends AppCompatActivity {
         super.onPause();
         Log.d(TAG, "Stopping ProximityContentManager content updates");
         proximityContentManager.stopContentUpdates();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
         beaconNotificationManager.startMonitoring();
     }
 
