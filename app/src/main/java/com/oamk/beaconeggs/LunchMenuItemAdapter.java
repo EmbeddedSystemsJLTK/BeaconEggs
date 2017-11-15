@@ -49,6 +49,9 @@ public class LunchMenuItemAdapter extends ArrayAdapter<LunchMenuItem> {
         holder.foodTitle.setText(lunchMenuItem.getTitle());
         holder.foodName.setText("" + lunchMenuItem.getName());
         holder.foodInfo.setText("" + lunchMenuItem.getInfo());
+        if(lunchMenuItem.getIsFavourite()){
+            holder.foodTitle.append(new String(Character.toChars(0X2B50)));
+        }
 
         return convertView;
     }

@@ -9,11 +9,13 @@ public class LunchMenuItem {
     private String title;
     private String name;
     private String info;
+    private boolean isFavourite;
 
-    public LunchMenuItem(String title, String name, String info){
+    public LunchMenuItem(String title, String name, String info, boolean isFavourite){
         this.title = title;
         this.name = name;
         this.info = info;
+        this.isFavourite = isFavourite;
     }
 
     public String getTitle() {
@@ -27,5 +29,7 @@ public class LunchMenuItem {
     public String getInfo() {
         return info;
     }
+
+    public boolean getIsFavourite() { return isFavourite; }
 
 }

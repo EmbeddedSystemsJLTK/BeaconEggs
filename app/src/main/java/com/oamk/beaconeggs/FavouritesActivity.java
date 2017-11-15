@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.WindowManager;
@@ -43,7 +44,7 @@ public class FavouritesActivity extends AppCompatActivity{
         setContentView(R.layout.activity_favourites);
         sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
-        for(String s: sharedPreferences.getStringSet(SAVED_FAVOURITES_KEY, null)){
+        for(String s: sharedPreferences.getStringSet(SAVED_FAVOURITES_KEY, new HashSet<String>())){
             favourites.add(new FavouritesItem(s));
         }
 
@@ -60,7 +61,7 @@ public class FavouritesActivity extends AppCompatActivity{
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!favouriteInput.equals("")){
+                if(favouriteInput.length() > 0){
                     favourites.add(new FavouritesItem(favouriteInput.getText().toString()));
                     favouritesAdapter.notifyDataSetChanged();
                     favouriteInput.setText("");
@@ -73,6 +74,7 @@ public class FavouritesActivity extends AppCompatActivity{
 
     @Override
     protected void onDestroy() {
+        Log.d(TAG, "onDestroy");
         super.onDestroy();
         save();
     }

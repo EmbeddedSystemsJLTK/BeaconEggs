@@ -1,6 +1,7 @@
 package com.oamk.beaconeggs;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.android.volley.Request;
@@ -16,6 +17,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashSet;
 
 /**
  * Created by Administrator on 8.11.2017.
@@ -23,9 +25,16 @@ import java.util.Calendar;
 
 public class LunchMenuFetcher {
     private final static String TAG = "LunchMenuFetcher";
+    private static String SAVED_FAVOURITES_KEY = "saved_favourites";
+    private static String SHARED_PREFERENCES = "shared_preferences";
+
+    private SharedPreferences sharedPreferences;
+    private boolean isFavourite;
 
     public void fetchLunchMenu(final ArrayList lunchMenuItems, final LunchMenuItemAdapter lunchMenuItemAdapter, Context context, String date){
         Log.d(TAG, "fetchLunchMenu");
+
+        sharedPreferences = context.getSharedPreferences(SHARED_PREFERENCES, Context.MODE_PRIVATE);
 
         String URL = "http://www.amica.fi/api/restaurant/menu/day?date=" + date + "&language=en&restaurantPageId=66287";
         Log.d(TAG, URL);
@@ -51,7 +60,13 @@ public class LunchMenuFetcher {
                                 }
                                 if (set.length() != 0) {
                                     Log.d("MEAL", set);
-                                    lunchMenuItems.add(new LunchMenuItem(title, set, ""));
+                                    for(String s: sharedPreferences.getStringSet(SAVED_FAVOURITES_KEY, new HashSet<String>())){
+                                        if(set.toLowerCase().contains(s.toLowerCase())){
+                                            isFavourite = true;
+                                            break;
+                                        }else isFavourite = false;
+                                    }
+                                    lunchMenuItems.add(new LunchMenuItem(title, set, "", isFavourite));
                                 }
                                 lunchMenuItemAdapter.notifyDataSetChanged();
                             }

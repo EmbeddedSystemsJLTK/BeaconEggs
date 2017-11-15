@@ -3,9 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BeaconEggs.iml" filepath="$PROJECT_DIR$/BeaconEggs.iml" />
-      <module fileurl="file://X:\Koulu\EmbeddedSystems\BeaconEggs\BeaconEggs.iml" filepath="X:\Koulu\EmbeddedSystems\BeaconEggs\BeaconEggs.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://X:\Koulu\EmbeddedSystems\BeaconEggs\app\app.iml" filepath="X:\Koulu\EmbeddedSystems\BeaconEggs\app\app.iml" />
     </modules>
   </component>
 </project>

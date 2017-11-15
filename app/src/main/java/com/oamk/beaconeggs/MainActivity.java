@@ -35,6 +35,8 @@ public class MainActivity extends AppCompatActivity {
     private String fDate;
     private Context mContext;
 
+    private EstimoteCloudBeaconDetails beaconDetails;
+
     private ProximityContentManager proximityContentManager;
     private BeaconNotificationManager beaconNotificationManager;
 
@@ -81,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                 String text;
                 Integer backgroundColor;
                 if (content != null) {
-                    EstimoteCloudBeaconDetails beaconDetails = (EstimoteCloudBeaconDetails) content;
+                    beaconDetails = (EstimoteCloudBeaconDetails) content;
                     text = beaconDetails.getBeaconName();
 
                     lunchMenuFetcher.fetchLunchMenu(lunchMenuItems, lunchMenuItemAdapter, mContext, fDate);
@@ -138,6 +140,15 @@ public class MainActivity extends AppCompatActivity {
             Log.d(TAG, "Starting ProximityContentManager content updates");
             proximityContentManager.startContentUpdates();
 
+            lunchMenuItems.clear();
+
+            lunchMenuFetcher.fetchLunchMenu(lunchMenuItems, lunchMenuItemAdapter, mContext, fDate);
+
+            searchLayout.setVisibility(View.INVISIBLE);
+
+            lunchMenuItemAdapter.notifyDataSetChanged();
+
+            onContentChanged();
         }
     }
 
